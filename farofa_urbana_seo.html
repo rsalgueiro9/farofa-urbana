@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAROFA URBANA – Gerador SEO YouTube</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0705;
+    --surface: #13100d;
+    --card: #1c1612;
+    --border: #2e2218;
+    --gold: #c9832a;
+    --gold-light: #e9a84a;
+    --red: #c0392b;
+    --cream: #f0e6d3;
+    --muted: #8a7560;
+    --uni: #9b4dca;
+    --uni-light: #c47dff;
+    --raiz: #c9832a;
+    --raiz-light: #e9a84a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 20%, rgba(201,131,42,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(155,77,202,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .wrapper { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  header { text-align: center; margin-bottom: 48px; }
+  .logo-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gold), var(--red));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .logo-sub {
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+  .divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--uni));
+    margin: 20px auto;
+    border-radius: 2px;
+  }
+  .singer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 8px 20px;
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--gold-light);
+    font-weight: 600;
+  }
+  .singer-badge span { color: var(--muted); font-weight: 400; }
+
+  .tabs {
+    display: flex;
+    gap: 2px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 4px;
+    margin-bottom: 32px;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: var(--muted);
+    letter-spacing: 0.3px;
+  }
+  .tab-btn.uni.active {
+    background: linear-gradient(135deg, #4a1a7a, #7a2dba);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(155,77,202,0.35);
+  }
+  .tab-btn.raiz.active {
+    background: linear-gradient(135deg, #7a4a10, #b8731e);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(201,131,42,0.35);
+  }
+  .tab-btn:hover:not(.active) { color: var(--cream); background: var(--card); }
+
+  .panel { display: none; animation: fadeIn 0.3s ease; }
+  .panel.active { display: block; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-singer-info {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 22px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border-radius: 8px;
+    border-left: 3px solid var(--gold);
+  }
+  .card-singer-info strong { color: var(--gold-light); }
+
+  .input-group { margin-bottom: 20px; }
+  label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  input[type="text"] {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 18px;
+    color: var(--cream);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: var(--gold); }
+  input::placeholder { color: var(--muted); }
+
+  .btn-generate {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-generate.uni {
+    background: linear-gradient(135deg, #7a2dba, #9b4dca);
+    color: #fff;
+    box-shadow: 0 4px 24px rgba(155,77,202,0.3);
+  }
+  .btn-generate.raiz {
+    background: linear-gradient(135deg, #b8731e, #c9832a);
+    color: #fff;
+    box-shadow: 0 4px 24px rgba(201,131,42,0.3);
+  }
+  .btn-generate:hover { transform: translateY(-2px); filter: brightness(1.1); }
+  .btn-generate:active { transform: translateY(0); }
+  .btn-generate:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  .loading-bar {
+    height: 3px;
+    border-radius: 2px;
+    margin-top: 12px;
+    background: var(--border);
+    overflow: hidden;
+    display: none;
+  }
+  .loading-bar.visible { display: block; }
+  .loading-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    width: 40%;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--uni));
+    animation: slide 1.2s infinite ease-in-out;
+  }
+  @keyframes slide { 0% { transform: translateX(-100%); } 100% { transform: translateX(350%); } }
+
+  .results { display: none; margin-top: 24px; }
+  .results.visible { display: block; animation: fadeIn 0.4s ease; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .title-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .title-card:hover { border-color: var(--gold); transform: translateX(4px); }
+  .title-card .title-text { font-size: 14px; font-weight: 500; line-height: 1.4; color: var(--cream); padding-right: 90px; }
+  .title-card .title-meta { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; align-items: center; }
+  .tag {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    padding: 3px 8px; border-radius: 4px;
+    background: rgba(201,131,42,0.1); color: var(--gold-light);
+    border: 1px solid rgba(201,131,42,0.2);
+  }
+  .tag.uni-tag { background: rgba(155,77,202,0.1); color: var(--uni-light); border-color: rgba(155,77,202,0.2); }
+  .char-count { font-size: 11px; color: var(--muted); margin-left: auto; }
+  .copy-hint { font-size: 11px; color: var(--muted); position: absolute; right: 14px; top: 14px; opacity: 0; transition: opacity 0.2s; }
+  .title-card:hover .copy-hint { opacity: 1; }
+
+  .thumb-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .thumb-card:hover { border-color: var(--uni); }
+  .thumb-card .prompt-text { font-size: 13px; line-height: 1.6; color: #c8b8a2; font-family: monospace; }
+  .thumb-card .prompt-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+
+  .error-card { border-color: #c0392b !important; color: #e07070; }
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--gold);
+    color: #000;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: transform 0.3s ease;
+    z-index: 999;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header>
+    <div class="logo-badge">FAROFA URBANA</div>
+    <div class="logo-sub">Gerador SEO · YouTube Studio</div>
+    <div class="divider"></div>
+    <div class="singer-badge">🎤 <span>Cantor fixo:</span> Renato Goiás</div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab-btn uni active" onclick="switchTab('uni')">🎤 Sertanejo Universitário</button>
+    <button class="tab-btn raiz" onclick="switchTab('raiz')">🪕 Modão Raiz</button>
+  </div>
+
+  <!-- UNIVERSITÁRIO -->
+  <div class="panel active" id="panel-uni">
+    <div class="card">
+      <div class="card-title"><span>🎤</span> Sertanejo Universitário</div>
+      <div class="card-singer-info">🎙️ Cantor: <strong>Renato Goiás</strong> · Canal: FAROFA URBANA</div>
+      <div class="input-group">
+        <label>Título Original da Música</label>
+        <input type="text" id="title-uni" placeholder="Ex: Apelido Carinhoso, Me Liga...">
+      </div>
+      <button class="btn-generate uni" id="btn-uni" onclick="generate('uni')">
+        ✨ Gerar Títulos SEO + Prompts de Thumbnail
+      </button>
+      <div class="loading-bar" id="loading-uni"></div>
+    </div>
+    <div class="results" id="results-uni"></div>
+  </div>
+
+  <!-- MODÃO RAIZ -->
+  <div class="panel" id="panel-raiz">
+    <div class="card">
+      <div class="card-title"><span>🪕</span> Modão Raiz</div>
+      <div class="card-singer-info">🎙️ Cantor: <strong>Renato Goiás</strong> · Canal: FAROFA URBANA</div>
+      <div class="input-group">
+        <label>Título Original da Música</label>
+        <input type="text" id="title-raiz" placeholder="Ex: Nuvem de Lágrimas, Fio de Cabelo...">
+      </div>
+      <button class="btn-generate raiz" id="btn-raiz" onclick="generate('raiz')">
+        ✨ Gerar Títulos SEO + Prompts de Thumbnail
+      </button>
+      <div class="loading-bar" id="loading-raiz"></div>
+    </div>
+    <div class="results" id="results-raiz"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">✓ Copiado!</div>
+
+<script>
+const SINGER = 'Renato Goiás';
+
+function switchTab(type) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + type).classList.add('active');
+  document.querySelector('.tab-btn.' + type).classList.add('active');
+}
+
+async function generate(type) {
+  const titleInput = document.getElementById('title-' + type).value.trim();
+  if (!titleInput) { showToast('⚠️ Digite o título da música!'); return; }
+
+  const btn = document.getElementById('btn-' + type);
+  const loading = document.getElementById('loading-' + type);
+  const results = document.getElementById('results-' + type);
+
+  btn.disabled = true;
+  loading.classList.add('visible');
+  results.classList.remove('visible');
+  results.innerHTML = '';
+
+  const isUni = type === 'uni';
+
+  const systemPrompt = `Você é especialista em SEO, AEO e CTA para YouTube Brasil, focado em música sertaneja. Responda SOMENTE com JSON válido. Sem texto antes ou depois. Sem markdown. Sem backticks.`;
+
+  const userPrompt = `Canal: FAROFA URBANA
+Cantor: ${SINGER}
+Estilo: ${isUni ? 'Sertanejo Universitário' : 'Modão Raiz / Sertanejo Caipira'}
+Música: "${titleInput}"
+
+Retorne JSON exatamente neste formato:
+{"titles":[{"text":"titulo aqui","tags":["SEO","CTA"],"chars":0},{"text":"titulo aqui","tags":["SEO","AEO"],"chars":0},{"text":"titulo aqui","tags":["AEO","CTA"],"chars":0}],"thumbnailPrompts":["prompt1","prompt2","prompt3"]}
+
+TÍTULOS (3 opções, máximo 99 chars cada):
+- Sempre inclua: ${SINGER} e "${titleInput}"
+- Título 1: SEO puro — palavras mais buscadas no YouTube
+- Título 2: CTA forte — gera urgência/clique
+- Título 3: AEO — formato de pergunta ou resposta para busca por voz
+- Palavras-chave para ${isUni ? 'universitário' : 'raiz'}: ${isUni ? 'letra, ao vivo, DVD, oficial, lançamento, top sertanejo, sertanejo universitário 2024' : 'moda raiz, modão, sertanejo raiz, caipira, viola, antigas, saudade, anos 80, anos 90, clássico'}
+- Preencha "chars" com o número real de caracteres do texto
+
+THUMBNAILS (3 prompts em inglês, 16:9, 8K, photorealistic, hyperdetailed):
+${isUni ? `- Mature beautiful woman, 35 years old, very sensual and elegant
+- Simple casual flowy dress, natural style, not explicit
+- Standing gracefully OR sitting on the ground, natural sensual pose
+- Warm golden hour bokeh background, outdoor setting
+- Fashion editorial photography, 16:9, 8K, photorealistic
+- Each prompt: different lighting and mood (golden hour / night lights / soft studio)` 
+: `- Authentic rugged Brazilian sertanejo man, 40-50 years old, weathered handsome face
+- Holding a viola caipira (Brazilian guitar) naturally in his hands
+- Traditional sertanejo clothing: straw hat, jeans, leather boots
+- Rural Brazilian countryside, sunset golden light
+- Nostalgic cinematic warm tones, 16:9, 8K, photorealistic
+- Each prompt: different setting/light (open field / barn / dirt road at dusk)`}`;
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: "user", content: userPrompt }]
+      })
+    });
+
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+
+    const data = await response.json();
+    if (!data.content || !data.content.length) throw new Error('Resposta vazia');
+
+    const raw = data.content.map(i => i.text || '').join('').trim();
+    // strip possible markdown fences
+    const clean = raw.replace(/^```[a-z]*\n?/,'').replace(/\n?```$/,'').trim();
+    const parsed = JSON.parse(clean);
+
+    if (!parsed.titles || !parsed.thumbnailPrompts) throw new Error('JSON incompleto');
+
+    renderResults(type, parsed);
+  } catch (err) {
+    results.innerHTML = `<div class="card error-card">⚠️ Erro ao gerar. Verifique sua conexão e tente novamente.<br><small style="opacity:0.6">${err.message}</small></div>`;
+    results.classList.add('visible');
+    console.error(err);
+  }
+
+  btn.disabled = false;
+  loading.classList.remove('visible');
+}
+
+function renderResults(type, data) {
+  const isUni = type === 'uni';
+  const tagClass = isUni ? 'uni-tag' : '';
+  const thumbLabels = ['🌅 Versão 1 – Luz Dourada', '🌃 Versão 2 – Atmosfera', '📸 Versão 3 – Editorial'];
+
+  let html = `<div class="card"><div class="section-label">🏷️ 3 Títulos Otimizados</div>`;
+
+  data.titles.forEach(t => {
+    const chars = t.text.length;
+    html += `
+      <div class="title-card" onclick="copyText(this.dataset.text)" data-text="${escapeAttr(t.text)}">
+        <span class="copy-hint">📋 clique para copiar</span>
+        <div class="title-text">${escapeHtml(t.text)}</div>
+        <div class="title-meta">
+          ${(t.tags||[]).map(tag => `<span class="tag ${tagClass}">${tag}</span>`).join('')}
+          <span class="char-count">${chars}/99 chars</span>
+        </div>
+      </div>`;
+  });
+
+  html += `<div class="section-label" style="margin-top:24px;">🖼️ 3 Prompts para Thumbnail (16:9 · 8K)</div>`;
+
+  data.thumbnailPrompts.forEach((prompt, i) => {
+    html += `
+      <div class="thumb-card" onclick="copyText(this.dataset.text)" data-text="${escapeAttr(prompt)}">
+        <div class="prompt-label">${thumbLabels[i]||'Versão '+(i+1)} <span style="float:right;font-size:10px;color:var(--muted)">📋 clique para copiar</span></div>
+        <div class="prompt-text">${escapeHtml(prompt)}</div>
+      </div>`;
+  });
+
+  html += `</div>`;
+
+  const results = document.getElementById('results-' + type);
+  results.innerHTML = html;
+  results.classList.add('visible');
+  results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function copyText(text) {
+  navigator.clipboard.writeText(text)
+    .then(() => showToast('✓ Copiado!'))
+    .catch(() => {
+      const el = document.createElement('textarea');
+      el.value = text;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      showToast('✓ Copiado!');
+    });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escapeAttr(str) {
+  return String(str).replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/\n/g,' ');
+}
+</script>
+</body>
+</html>
